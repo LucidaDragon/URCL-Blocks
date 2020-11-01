@@ -1256,7 +1256,7 @@
 								}
 							],
 							"output": "Number",
-							"colour": 120,
+							"colour": 135,
 							"tooltip": "",
 							"helpUrl": ""
 						}
@@ -1265,6 +1265,246 @@
 						(block) =>
 						{
 							return [block.getFieldValue("Value").toString(), Blockly.JavaScript.ORDER_NONE];
+						}
+					</field>
+				</block>
+			</category>
+			<category name="I/O">
+				<block>
+					<field type="application/json">
+						{
+							"type": "select_device",
+							"message0": "Select device %1",
+							"args0": [
+								{
+									"type": "input_value",
+									"name": "B",
+									"check": "register"
+								}
+							],
+							"previousStatement": null,
+							"nextStatement": null,
+							"colour": 100,
+							"tooltip": "",
+							"helpUrl": ""
+						}
+					</field>
+					<field type="application/javascript">
+						(block) =>
+						{
+							return "out 255 " + Operand(block, "B") + "\n";
+						}
+					</field>
+				</block>
+				<block>
+					<field type="application/json">
+						{
+							"type": "in",
+							"message0": "Read port %3 to %2 %1",
+							"args0": [
+								{
+									"type": "input_value",
+									"name": "A",
+									"check": "register"
+								},
+								{
+									"type": "input_dummy"
+								},
+								{
+									"type": "input_value",
+									"name": "B",
+									"check": "Number"
+								}
+							],
+							"previousStatement": null,
+							"nextStatement": null,
+							"colour": 100,
+							"tooltip": "",
+							"helpUrl": ""
+						}
+					</field>
+					<field type="application/javascript">
+						(block) =>
+						{
+							return "in " + Operand(block, "A") + " " + Operand(block, "B") + "\n";
+						}
+					</field>
+				</block>
+				<block>
+					<field type="application/json">
+						{
+							"type": "out",
+							"message0": "Write port %3 from %2 %1",
+							"args0": [
+								{
+									"type": "input_value",
+									"name": "B",
+									"check": "register"
+								},
+								{
+									"type": "input_dummy"
+								},
+								{
+									"type": "input_value",
+									"name": "A",
+									"check": "Number"
+								}
+							],
+							"previousStatement": null,
+							"nextStatement": null,
+							"colour": 100,
+							"tooltip": "",
+							"helpUrl": ""
+						}
+					</field>
+					<field type="application/javascript">
+						(block) =>
+						{
+							return "out " + Operand(block, "A") + " " + Operand(block, "B") + "\n";
+						}
+					</field>
+				</block>
+				<block>
+					<field type="application/json">
+						{
+							"type": "device_bus",
+							"message0": "Main Bus",
+							"output": "Number",
+							"colour": 100,
+							"tooltip": "",
+							"helpUrl": ""
+						}
+					</field>
+					<field type="application/javascript">
+						(block) =>
+						{
+							return ["0", Blockly.JavaScript.ORDER_NONE];
+						}
+					</field>
+				</block>
+				<block>
+					<field type="application/json">
+						{
+							"type": "device_value",
+							"message0": "Value Display",
+							"output": "Number",
+							"colour": 100,
+							"tooltip": "",
+							"helpUrl": ""
+						}
+					</field>
+					<field type="application/javascript">
+						(block) =>
+						{
+							return ["1", Blockly.JavaScript.ORDER_NONE];
+						}
+					</field>
+				</block>
+				<block>
+					<field type="application/json">
+						{
+							"type": "device_gpu",
+							"message0": "GPU",
+							"output": "Number",
+							"colour": 100,
+							"tooltip": "",
+							"helpUrl": ""
+						}
+					</field>
+					<field type="application/javascript">
+						(block) =>
+						{
+							return ["2", Blockly.JavaScript.ORDER_NONE];
+						}
+					</field>
+				</block>
+				<block>
+					<field type="application/json">
+						{
+							"type": "device_teletype",
+							"message0": "Teletype",
+							"output": "Number",
+							"colour": 100,
+							"tooltip": "",
+							"helpUrl": ""
+						}
+					</field>
+					<field type="application/javascript">
+						(block) =>
+						{
+							return ["3", Blockly.JavaScript.ORDER_NONE];
+						}
+					</field>
+				</block>
+				<block>
+					<field type="application/json">
+						{
+							"type": "device_storage",
+							"message0": "Storage",
+							"output": "Number",
+							"colour": 100,
+							"tooltip": "",
+							"helpUrl": ""
+						}
+					</field>
+					<field type="application/javascript">
+						(block) =>
+						{
+							return ["4", Blockly.JavaScript.ORDER_NONE];
+						}
+					</field>
+				</block>
+				<block>
+					<field type="application/json">
+						{
+							"type": "device_message",
+							"message0": "Messages",
+							"output": "Number",
+							"colour": 100,
+							"tooltip": "",
+							"helpUrl": ""
+						}
+					</field>
+					<field type="application/javascript">
+						(block) =>
+						{
+							return ["5", Blockly.JavaScript.ORDER_NONE];
+						}
+					</field>
+				</block>
+				<block>
+					<field type="application/json">
+						{
+							"type": "device_communications",
+							"message0": "Communications",
+							"output": "Number",
+							"colour": 100,
+							"tooltip": "",
+							"helpUrl": ""
+						}
+					</field>
+					<field type="application/javascript">
+						(block) =>
+						{
+							return ["6", Blockly.JavaScript.ORDER_NONE];
+						}
+					</field>
+				</block>
+				<block>
+					<field type="application/json">
+						{
+							"type": "device_gpio",
+							"message0": "GPIO",
+							"output": "Number",
+							"colour": 100,
+							"tooltip": "",
+							"helpUrl": ""
+						}
+					</field>
+					<field type="application/javascript">
+						(block) =>
+						{
+							return ["7", Blockly.JavaScript.ORDER_NONE];
 						}
 					</field>
 				</block>
