@@ -264,112 +264,6 @@
 				<block>
 					<field type="application/json">
 						{
-							"type": "goto",
-							"message0": "Goto %1",
-							"args0": [
-								{
-									"type": "field_input",
-									"name": "Label",
-									"text": "MyLabel"
-								}
-							],
-							"previousStatement": null,
-							"nextStatement": null,
-							"colour": 45,
-							"tooltip": "",
-							"helpUrl": ""
-						}
-					</field>
-					<field type="application/javascript">
-						(block) =>
-						{
-							return "bra ." + LabelFormat(block.getFieldValue("Label")) + "\n";
-						}
-					</field>
-				</block>
-				<block>
-					<field type="application/json">
-						{
-							"type": "goto_conditional",
-							"message0": "Goto %1 if %2",
-							"args0": [
-								{
-									"type": "field_input",
-									"name": "Label",
-									"text": "MyLabel"
-								},
-								{
-									"type": "field_dropdown",
-									"name": "Flag",
-									"options": [
-										[
-											"zero flag",
-											"z"
-										],
-										[
-											"not zero flag",
-											"nz"
-										],
-										[
-											"carry flag",
-											"c"
-										],
-										[
-											"not carry flag",
-											"nc"
-										],
-										[
-											"positive flag",
-											"p"
-										],
-										[
-											"negative flag",
-											"n"
-										]
-									]
-								}
-							],
-							"previousStatement": null,
-							"nextStatement": null,
-							"colour": 45,
-							"tooltip": "",
-							"helpUrl": ""
-						}
-					</field>
-					<field type="application/javascript">
-						(block) =>
-						{
-							var inst = "bra";
-
-							switch (block.getFieldValue("Flag"))
-							{
-								case "z":
-									inst = "brz";
-									break;
-								case "nz":
-									inst = "bnz";
-									break;
-								case "c":
-									inst = "brc";
-									break;
-								case "nc":
-									inst = "bnc";
-									break;
-								case "p":
-									inst = "brp";
-									break;
-								case "n":
-									inst = "brn";
-									break;
-							}
-
-							return inst + " ." + LabelFormat(block.getFieldValue("Label")) + "\n";
-						}
-					</field>
-				</block>
-				<block>
-					<field type="application/json">
-						{
 							"type": "goto_value",
 							"message0": "Goto %1",
 							"args0": [
@@ -479,6 +373,81 @@
 						}
 					</field>
 				</block>
+                <block>
+                    <field type="application/json">
+                        {
+							"type": "goto_value_comparison",
+							"message0": "Goto %1 if %2 is %3 %4",
+							"args0": [
+								{
+									"type": "input_value",
+									"name": "A",
+									"check": [
+										"register",
+										"Number"
+									]
+								},
+                                {
+                                    "type": "input_value",
+									"name": "B",
+									"check": [
+										"register",
+										"Number"
+									]
+                                },
+								{
+									"type": "field_dropdown",
+									"name": "Condition",
+									"options": [
+										[
+											"less than",
+											"brl"
+										],
+										[
+											"greater than",
+											"brg"
+										],
+										[
+											"equal to",
+											"bre"
+										],
+										[
+											"not equal to",
+											"bne"
+										],
+										[
+											"less than or equal to",
+											"ble"
+										],
+										[
+											"greater than or equal to",
+											"bge"
+										]
+									]
+								},
+                                {
+                                    "type": "input_value",
+									"name": "C",
+									"check": [
+										"register",
+										"Number"
+									]
+                                }
+							],
+							"previousStatement": null,
+							"nextStatement": null,
+							"colour": 45,
+							"tooltip": "",
+							"helpUrl": ""
+						}
+                    </field>
+                    <field type="application/javascript">
+						(block) =>
+						{
+							return block.getFieldValue("Condition") + " " + Operand(block, "A") + " " + Operand(block, "B") + " " + Operand(block, "C") + "\n";
+						}
+					</field>
+                </block>
 			</category>
 			<category name="Arithmetic">
 				<block>
@@ -577,6 +546,246 @@
 						}
 					</field>
 				</block>
+                <block>
+					<field type="application/json">
+						{
+							"type": "adc",
+							"message0": "%1 + %2 %3 + carry = %4 %5",
+							"args0": [
+								{
+									"type": "input_value",
+									"name": "B",
+									"check": [
+										"register",
+										"Number"
+									]
+								},
+								{
+									"type": "input_dummy"
+								},
+								{
+									"type": "input_value",
+									"name": "C",
+									"check": [
+										"register",
+										"Number"
+									]
+								},
+								{
+									"type": "input_dummy"
+								},
+								{
+									"type": "input_value",
+									"name": "A",
+									"check": "register"
+								}
+							],
+							"previousStatement": null,
+							"nextStatement": null,
+							"colour": 210,
+							"tooltip": "",
+							"helpUrl": ""
+						}
+					</field>
+					<field type="application/javascript">
+						(block) =>
+						{
+							return "adc " + Operand(block, "A") + " " + Operand(block, "B") + " " + Operand(block, "C") + "\n";
+						}
+					</field>
+				</block>
+				<block>
+					<field type="application/json">
+						{
+							"type": "sbb",
+							"message0": "%1 - %2 %3 - borrow = %4 %5",
+							"args0": [
+								{
+									"type": "input_value",
+									"name": "B",
+									"check": [
+										"register",
+										"Number"
+									]
+								},
+								{
+									"type": "input_dummy"
+								},
+								{
+									"type": "input_value",
+									"name": "C",
+									"check": [
+										"register",
+										"Number"
+									]
+								},
+								{
+									"type": "input_dummy"
+								},
+								{
+									"type": "input_value",
+									"name": "A",
+									"check": "register"
+								}
+							],
+							"previousStatement": null,
+							"nextStatement": null,
+							"colour": 210,
+							"tooltip": "",
+							"helpUrl": ""
+						}
+					</field>
+					<field type="application/javascript">
+						(block) =>
+						{
+							return "sbb " + Operand(block, "A") + " " + Operand(block, "B") + " " + Operand(block, "C") + "\n";
+						}
+					</field>
+				</block>
+                <block>
+					<field type="application/json">
+						{
+							"type": "mlt",
+							"message0": "%1 * %2 %3 = %4 %5",
+							"args0": [
+								{
+									"type": "input_value",
+									"name": "B",
+									"check": [
+										"register",
+										"Number"
+									]
+								},
+								{
+									"type": "input_dummy"
+								},
+								{
+									"type": "input_value",
+									"name": "C",
+									"check": [
+										"register",
+										"Number"
+									]
+								},
+								{
+									"type": "input_dummy"
+								},
+								{
+									"type": "input_value",
+									"name": "A",
+									"check": "register"
+								}
+							],
+							"previousStatement": null,
+							"nextStatement": null,
+							"colour": 210,
+							"tooltip": "",
+							"helpUrl": ""
+						}
+					</field>
+					<field type="application/javascript">
+						(block) =>
+						{
+							return "mlt " + Operand(block, "A") + " " + Operand(block, "B") + " " + Operand(block, "C") + "\n";
+						}
+					</field>
+				</block>
+				<block>
+					<field type="application/json">
+						{
+							"type": "div",
+							"message0": "%1 / %2 %3 = %4 %5",
+							"args0": [
+								{
+									"type": "input_value",
+									"name": "B",
+									"check": [
+										"register",
+										"Number"
+									]
+								},
+								{
+									"type": "input_dummy"
+								},
+								{
+									"type": "input_value",
+									"name": "C",
+									"check": [
+										"register",
+										"Number"
+									]
+								},
+								{
+									"type": "input_dummy"
+								},
+								{
+									"type": "input_value",
+									"name": "A",
+									"check": "register"
+								}
+							],
+							"previousStatement": null,
+							"nextStatement": null,
+							"colour": 210,
+							"tooltip": "",
+							"helpUrl": ""
+						}
+					</field>
+					<field type="application/javascript">
+						(block) =>
+						{
+							return "div " + Operand(block, "A") + " " + Operand(block, "B") + " " + Operand(block, "C") + "\n";
+						}
+					</field>
+				</block>
+                <block>
+					<field type="application/json">
+						{
+							"type": "mod",
+							"message0": "%1 % %2 %3 = %4 %5",
+							"args0": [
+								{
+									"type": "input_value",
+									"name": "B",
+									"check": [
+										"register",
+										"Number"
+									]
+								},
+								{
+									"type": "input_dummy"
+								},
+								{
+									"type": "input_value",
+									"name": "C",
+									"check": [
+										"register",
+										"Number"
+									]
+								},
+								{
+									"type": "input_dummy"
+								},
+								{
+									"type": "input_value",
+									"name": "A",
+									"check": "register"
+								}
+							],
+							"previousStatement": null,
+							"nextStatement": null,
+							"colour": 210,
+							"tooltip": "",
+							"helpUrl": ""
+						}
+					</field>
+					<field type="application/javascript">
+						(block) =>
+						{
+							return "mod " + Operand(block, "A") + " " + Operand(block, "B") + " " + Operand(block, "C") + "\n";
+						}
+					</field>
+				</block>
 				<block>
 					<field type="application/json">
 						{
@@ -648,6 +857,96 @@
 						(block) =>
 						{
 							return "lsh " + Operand(block, "A") + " " + Operand(block, "B") + "\n";
+						}
+					</field>
+				</block>
+                <block>
+					<field type="application/json">
+						{
+							"type": "bsr",
+							"message0": "%1 >> %2 = %3 %4",
+							"args0": [
+								{
+									"type": "input_value",
+									"name": "B",
+									"check": [
+										"register",
+										"Number"
+									]
+								},
+                                {
+                                    "type": "input_value",
+									"name": "C",
+									"check": [
+										"register",
+										"Number"
+									]
+                                },
+								{
+									"type": "input_dummy"
+								},
+								{
+									"type": "input_value",
+									"name": "A",
+									"check": "register"
+								}
+							],
+							"previousStatement": null,
+							"nextStatement": null,
+							"colour": 210,
+							"tooltip": "",
+							"helpUrl": ""
+						}
+					</field>
+					<field type="application/javascript">
+						(block) =>
+						{
+							return "bsr " + Operand(block, "A") + " " + Operand(block, "B") + " " + Operand(block, "C") + "\n";
+						}
+					</field>
+				</block>
+				<block>
+					<field type="application/json">
+						{
+							"type": "bsl",
+							"message0": "%1 << %2 = %3 %4",
+							"args0": [
+								{
+									"type": "input_value",
+									"name": "B",
+									"check": [
+										"register",
+										"Number"
+									]
+								},
+                                {
+                                    "type": "input_value",
+									"name": "C",
+									"check": [
+										"register",
+										"Number"
+									]
+                                },
+								{
+									"type": "input_dummy"
+								},
+								{
+									"type": "input_value",
+									"name": "A",
+									"check": "register"
+								}
+							],
+							"previousStatement": null,
+							"nextStatement": null,
+							"colour": 210,
+							"tooltip": "",
+							"helpUrl": ""
+						}
+					</field>
+					<field type="application/javascript">
+						(block) =>
+						{
+							return "bsl " + Operand(block, "A") + " " + Operand(block, "B") + " " + Operand(block, "C") + "\n";
 						}
 					</field>
 				</block>
@@ -1050,6 +1349,80 @@
 						}
 					</field>
 				</block>
+                <block>
+					<field type="application/json">
+						{
+							"type": "neg",
+							"message0": "%1 = %2 -%3",
+							"args0": [
+								{
+									"type": "input_value",
+									"name": "B",
+									"check": [
+										"register",
+										"Number"
+									]
+								},
+								{
+									"type": "input_dummy"
+								},
+								{
+									"type": "input_value",
+									"name": "A",
+									"check": "register"
+								}
+							],
+							"previousStatement": null,
+							"nextStatement": null,
+							"colour": 210,
+							"tooltip": "",
+							"helpUrl": ""
+						}
+					</field>
+					<field type="application/javascript">
+						(block) =>
+						{
+							return "neg " + Operand(block, "A") + " " + Operand(block, "B") + "\n";
+						}
+					</field>
+				</block>
+                <block>
+					<field type="application/json">
+						{
+							"type": "cmp",
+							"message0": "Compare %1 with %2 %3",
+							"args0": [
+								{
+									"type": "input_value",
+									"name": "A",
+									"check": [
+										"register",
+										"Number"
+									]
+								},
+								{
+									"type": "input_dummy"
+								},
+								{
+									"type": "input_value",
+									"name": "B",
+									"check": "register"
+								}
+							],
+							"previousStatement": null,
+							"nextStatement": null,
+							"colour": 210,
+							"tooltip": "",
+							"helpUrl": ""
+						}
+					</field>
+					<field type="application/javascript">
+						(block) =>
+						{
+							return "cmp " + Operand(block, "A") + " " + Operand(block, "B") + "\n";
+						}
+					</field>
+				</block>
 			</category>
 			<category name="Memory">
 				<block>
@@ -1123,7 +1496,7 @@
 				<block>
 					<field type="application/json">
 						{
-							"type": "load",
+							"type": "lod",
 							"message0": "Load from address %3 into %2 %1",
 							"args0": [
 								{
@@ -1153,14 +1526,14 @@
 					<field type="application/javascript">
 						(block) =>
 						{
-							return "load " + Operand(block, "A") + " " + Operand(block, "B") + "\n";
+							return "lod " + Operand(block, "A") + " " + Operand(block, "B") + "\n";
 						}
 					</field>
 				</block>
 				<block>
 					<field type="application/json">
 						{
-							"type": "store",
+							"type": "str",
 							"message0": "Store to address %1 from %2 %3",
 							"args0": [
 								{
@@ -1190,12 +1563,92 @@
 					<field type="application/javascript">
 						(block) =>
 						{
-							return "store " + Operand(block, "A") + " " + Operand(block, "B") + "\n";
+							return "str " + Operand(block, "A") + " " + Operand(block, "B") + "\n";
+						}
+					</field>
+				</block>
+                <block>
+					<field type="application/json">
+						{
+							"type": "psh",
+							"message0": "Push %1 to the stack",
+							"args0": [
+								{
+									"type": "input_value",
+									"name": "A",
+									"check": "register"
+								}
+							],
+							"previousStatement": null,
+							"nextStatement": null,
+							"colour": 260,
+							"tooltip": "",
+							"helpUrl": ""
+						}
+					</field>
+					<field type="application/javascript">
+						(block) =>
+						{
+							return "psh " + Operand(block, "A") + "\n";
+						}
+					</field>
+				</block>
+				<block>
+					<field type="application/json">
+						{
+							"type": "pop",
+							"message0": "Pop from the stack to %1",
+							"args0": [
+								{
+									"type": "input_value",
+									"name": "B",
+									"check": [
+										"register",
+										"Number"
+									]
+								}
+							],
+							"previousStatement": null,
+							"nextStatement": null,
+							"colour": 260,
+							"tooltip": "",
+							"helpUrl": ""
+						}
+					</field>
+					<field type="application/javascript">
+						(block) =>
+						{
+							return "pop " + Operand(block, "A") + "\n";
 						}
 					</field>
 				</block>
 			</category>
 			<category name="Operands">
+                <block>
+                    <field type="application/json">
+                        {
+							"type": "label_ref",
+							"message0": "%1",
+							"args0": [
+								{
+									"type": "field_input",
+									"name": "Label",
+									"text": "MyLabel"
+								}
+                            ],
+							"output": "Number",
+							"colour": 45,
+							"tooltip": "",
+							"helpUrl": ""
+                        }
+                    </field>
+                    <field type="application/javascript">
+                        (block) =>
+						{
+							return [block.getFieldValue("Label"), Blockly.JavaScript.ORDER_NONE];
+						}
+                    </field>
+                </block>
 				<block>
 					<field type="application/json">
 						{
