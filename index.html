@@ -167,9 +167,12 @@
 							"message0": "Call %1",
 							"args0": [
 								{
-									"type": "field_input",
-									"name": "Label",
-									"text": "MyRoutine"
+									"type": "input_value",
+									"name": "A",
+									"check": [
+										"register",
+										"Number"
+									]
 								}
 							],
 							"previousStatement": null,
@@ -182,7 +185,7 @@
 					<field type="application/javascript">
 						(block) =>
 						{
-							return "cal ." + LabelFormat(block.getFieldValue("Label")) + "\n";
+							return "cal " + Operand(block, "A") + "\n";
 						}
 					</field>
 				</block>
@@ -1645,7 +1648,7 @@
                     <field type="application/javascript">
                         (block) =>
 						{
-							return [block.getFieldValue("Label"), Blockly.JavaScript.ORDER_NONE];
+							return ["." + LabelFormat(block.getFieldValue("Label")), Blockly.JavaScript.ORDER_NONE];
 						}
                     </field>
                 </block>
